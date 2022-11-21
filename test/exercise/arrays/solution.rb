@@ -2,7 +2,7 @@ module Exercise
   module Arrays
     class << self
       def replace(array)
-        max = array.max()
+        max = max(array)
         array.map { |element| element.positive? ? max : element }
       end
 
@@ -11,6 +11,19 @@ module Exercise
       end
 
       private
+
+      def max(array, current_max = nil)
+        if array.length.zero?
+          current_max
+        else
+          head, *tail = array
+          if current_max.nil? || head > current_max
+            max(tail, head)
+          else
+            max(tail, current_max)
+          end
+        end
+      end
 
       def binary_search(array, first_index, last_index, query)
         if first_index < last_index
