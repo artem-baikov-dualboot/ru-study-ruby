@@ -21,7 +21,9 @@ module Exercise
       end
 
       # Написать свою функцию my_compact
-      def my_compact; end
+      def my_compact
+        my_reduce(MyArray.new) { |acc, element| element.nil? ? acc : acc.push(element) }
+      end
 
       # Написать свою функцию my_reduce
       def my_reduce(acc = nil)
