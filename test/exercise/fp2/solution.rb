@@ -6,10 +6,10 @@ module Exercise
 
       # Написать свою функцию my_each
       def my_each
-        raise 'No block given' unless block_given?
+        return self unless block_given?
 
         for element in self do
-          yield element
+          yield(element)
         end
       end
 
@@ -20,7 +20,22 @@ module Exercise
       def my_compact; end
 
       # Написать свою функцию my_reduce
-      def my_reduce; end
+      def my_reduce(acc = nil)
+        return acc unless block_given?
+
+        start_index = 0
+
+        if acc.nil?
+          acc = self[0]
+          start_index = 1
+        end
+
+        for element in self[start_index..] do
+          acc = yield(acc, element)
+        end
+
+        acc
+      end
     end
   end
 end
