@@ -12,12 +12,20 @@ module Exercise
           .then { |info| info[:rating] / info[:amount] }
       end
 
-      def chars_count(_films, _threshold)
-        0
+      def chars_count(array, threshold)
+        array
+          .select { |film| rating_not_less_than_threshold?(film, threshold) }
+          .reject { |film| film['name'].nil? }
+          .map { |film| film['name'] }
+          .reduce(0) { |letter_count, film_name| letter_count + film_name.count('и') }
       end
 
       def valid_rating?(film)
         !film['rating_kinopoisk'].nil? && film['rating_kinopoisk'].to_f.positive?
+      end
+
+      def rating_not_less_than_threshold?(film, threshold)
+        !film['rating_kinopoisk'].nil? && film['rating_kinopoisk'].to_f >= threshold
       end
 
       def enough_countries?(film)
