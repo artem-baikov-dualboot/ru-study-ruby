@@ -14,7 +14,11 @@ module Exercise
       end
 
       # Написать свою функцию my_map
-      def my_map; end
+      def my_map
+        return self unless block_given?
+
+        my_reduce(MyArray.new) { |acc, element| acc.push(yield(element)) }
+      end
 
       # Написать свою функцию my_compact
       def my_compact; end
