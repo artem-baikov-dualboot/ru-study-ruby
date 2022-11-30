@@ -8,7 +8,11 @@ module Exercise
       def my_each(&block)
         return self unless block_given?
 
-        my_foreach(self, &block)
+        head, *tail = self
+
+        yield(head)
+
+        tail.length.zero? ? [head] : [head] + MyArray.new(tail).my_each(&block)
       end
 
       # Написать свою функцию my_map
@@ -38,18 +42,6 @@ module Exercise
       end
 
       private
-
-      def my_foreach(array, &block)
-        head, *tail = array
-
-        yield(head)
-
-        if tail.length.zero?
-          [head]
-        else
-          [head] + my_foreach(tail, &block)
-        end
-      end
 
       def reduce_array(acc, array, &block)
         head, *tail = array
