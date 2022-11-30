@@ -31,28 +31,11 @@ module Exercise
       def my_reduce(acc = nil, &block)
         return acc unless block_given?
 
-        start_index = 0
+        head, *tail = self
 
-        if acc.nil?
-          acc = self[0]
-          start_index = 1
-        end
+        acc = acc.nil? ? head : yield(acc, head)
 
-        reduce_array(acc, self[start_index..], &block)
-      end
-
-      private
-
-      def reduce_array(acc, array, &block)
-        head, *tail = array
-
-        acc = yield(acc, head)
-
-        if tail.length.zero?
-          acc
-        else
-          reduce_array(acc, tail, &block)
-        end
+        tail.length.zero? ? acc : MyArray.new(tail).my_reduce(acc, &block)
       end
     end
   end
